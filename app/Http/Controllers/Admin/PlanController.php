@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PlanRequest;
 use App\Models\Plan;
 use Illuminate\Http\Request;
 
@@ -39,7 +40,7 @@ class PlanController extends Controller
      */
     public function create()
     {
-        //
+        return view(self::PLANS . 'create');
     }
 
     /**
@@ -48,9 +49,14 @@ class PlanController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PlanRequest $request)
     {
-        //
+        if (!$this->repository->create($request->all())) {
+
+            return redirect()->back()->with('error', 'Houve um erro ao cadastrar o plano');
+        }
+
+        return redirect()->route('plans.index')->with('success', 'Plano cadastrado com sucesso');
     }
 
     /**

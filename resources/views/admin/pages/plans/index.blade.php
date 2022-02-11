@@ -11,8 +11,13 @@
     <div class="card">
         <div class="card-header">
             <div class="row">
+                <div class="col">
+                    @include('admin.includes.alerts')
+                </div>
+            </div>
+            <div class="row">
                 <div class="col d-flex justify-content-between">
-                    <a href="" class="btn btn-primary">Cadastrar</a>
+                    <a href="{{ route('plans.create') }}" class="btn btn-primary">Cadastrar</a>
                 </div>
                 <div class="col d-flex justify-content-end">
                     <form action="" method="POST" class="form form-inline">
@@ -41,7 +46,7 @@
                                 <tr class="text-center">
                                     <td>{{ $plan->name }}</td>
                                     <td>{{ $plan->description }}</td>
-                                    <td>{{ $plan->price }}</td>
+                                    <td>R$ {{ $plan->price }}</td>
                                     <td>
                                         <div class="btn-group">
                                             <a href="" class="btn btn-warning">Editar</a>
