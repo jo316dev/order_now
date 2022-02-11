@@ -1,22 +1,21 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+@extends('adminlte::page')
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+@section('title', 'Dashboard')
 
-    <title>Laravel</title>
+@section('content_header')
+    <h1>Dashboard</h1>
+@stop
 
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+@section('content')
+    <p>Welcome to this beautiful admin panel.</p>
+@stop
 
-</head>
+@section('css')
+    <link rel="stylesheet" href="/css/admin_custom.css">
+@stop
 
-<body class="antialiased">
-    <div class="py-8 text-base leading-7 space-y-6 text-red-600">
-        <h1>Order Now</h1>
-    </div>
-</body>
-
-</html>
+@section('js')
+    <script>
+        console.log('Hi!');
+    </script>
+@stop
