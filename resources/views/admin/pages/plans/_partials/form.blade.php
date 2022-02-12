@@ -7,7 +7,7 @@
 <div class="form-group">
     <label for="">Descrição</label>
     <input type="text" class="form-control" name="description" placeholder="Insira a descrição do plano"
-        value="{{ $plan->description ?? old('name') }}">
+        value="{{ $plan->description ?? old('description') }}">
 </div>
 
 <div class="form-group">
