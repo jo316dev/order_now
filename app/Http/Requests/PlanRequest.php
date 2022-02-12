@@ -26,7 +26,7 @@ class PlanRequest extends FormRequest
         return [
             'name' => ['required', 'min:3', 'max:255'],
             'description' => ['nullable', 'min:5', 'max:200'],
-            'price' => ['integer', 'numeric']
+            'price' => "required|regex:/^\d+(\.\d{1,2})?$/",
         ];
     }
 }

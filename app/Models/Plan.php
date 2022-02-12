@@ -18,4 +18,15 @@ class Plan extends Model
     {
         return $this->hasMany(Detail::class);
     }
+
+    public function search($filter = null)
+    {
+
+        return $this->where(function ($query) use ($filter) {
+
+            $query->where('name', 'LIKE', "%{$filter}%");
+            $query->orWhere('description', 'LIKE', "%{$filter}%");
+            $query->orWhere('price', 'LIKE', "%{$filter}%");
+        })->paginate(10);
+    }
 }

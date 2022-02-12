@@ -13,7 +13,7 @@
                 <form action="{{ route('plans.store') }}" method="POST">
                     @csrf
                     @include('admin.pages.plans._partials.form')
-                    <button type="submit" class="btn btn-primary">Enviar</button>
+
                 </form>
             </div>
         </div>

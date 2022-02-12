@@ -15,3 +15,5 @@
     <input type="text" class="form-control" name="price" placeholder="Valor do plano em R$"
         value="{{ $plan->price ?? old('price') }}">
 </div>
+
+<button type="submit" class="btn btn-primary">Enviar</button>

@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\{
 
 Route::prefix('admin')->group(function () {
 
+    Route::any('plans/seach', [PlanController::class, 'search'])->name('plans.search');
     Route::resource('plans', PlanController::class);
 });
 

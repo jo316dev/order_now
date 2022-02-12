@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Planos')
 
 @section('content_header')
     <h1>Planos</h1>
@@ -20,7 +20,7 @@
                     <a href="{{ route('plans.create') }}" class="btn btn-primary">Cadastrar</a>
                 </div>
                 <div class="col d-flex justify-content-end">
-                    <form action="" method="POST" class="form form-inline">
+                    <form action="{{ route('plans.search') }}" method="POST" class="form form-inline">
                         @csrf
                         <input type="text" name="filter" placeholder="Nome" class="form-control"
                             value="{{ $filters['filter'] ?? '' }}">
@@ -46,11 +46,17 @@
                                 <tr class="text-center">
                                     <td>{{ $plan->name }}</td>
                                     <td>{{ $plan->description }}</td>
-                                    <td>R$ {{ $plan->price }}</td>
+                                    <td>{{ $plan->price }}</td>
                                     <td>
                                         <div class="btn-group">
-                                            <a href="" class="btn btn-warning">Editar</a>
-                                            <a href="" class="btn btn-danger">Excluir</a>
+                                            <a href="{{ route('plans.edit', $plan->url) }}"
+                                                class="btn btn-warning">Editar</a>
+                                            <form action="{{ route('plans.destroy', $plan->url) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger"><i
+                                                        class="fas fa-trash-alt"></i></button>
+                                            </form>
                                         </div>
                                     </td>
                                 </tr>
@@ -64,6 +70,7 @@
         <div class="card-footer d-flex justify-content-center">
             @if (isset($filters))
                 {!! $plans->appends($filters)->links() !!}
+
             @else
                 {!! $plans->links() !!}
             @endif

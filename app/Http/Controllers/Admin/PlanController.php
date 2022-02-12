@@ -73,34 +73,64 @@ class PlanController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $url
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($url)
     {
-        //
+        if (!$plan = $this->repository->where('url', $url)->first()) {
+
+            return redirect()->back()->with('error', 'Plano não encontrado');
+        }
+
+        return view(self::PLANS . 'edit', compact('plan'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int  $url
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PlanRequest $request, $url)
     {
-        //
+        if (!$plan = $this->repository->where('url', $url)->first()) {
+
+            return redirect()->back()->with('error', 'Plano não encontrado');
+        }
+
+        $plan->update($request->all());
+
+        return redirect()->route('plans.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int  $url
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($url)
     {
-        //
+        if (!$plan = $this->repository->where('url', $url)->first()) {
+
+            return redirect()->back()->with('error', 'Plano não encontrado');
+        }
+
+        $plan->delete();
+
+        return redirect()->route('plans.index')->with('success', 'Plano deletado com sucesso');
+    }
+
+    public function search(Request $request)
+    {
+        $filters = $request->except('_token');
+
+
+
+        $plans = $this->repository->search($request->filter);
+
+        return view(self::PLANS . 'index', compact('plans', 'filters'));
     }
 }

@@ -6,13 +6,11 @@ trait DefaultAccessors
 {
     public function getNameAttribute($value)
     {
-        return ucfirst($value);
+        return ucwords($value);
     }
 
-    public function getPriceAttribute($value)
+    public function getDescriptionAtribute($value)
     {
-        setlocale(LC_MONETARY, "pt_BR");
-
-        return money_format('$%i', $value);
+        return ucfirst(strtolower($value));
     }
 }

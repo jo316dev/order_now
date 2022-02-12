@@ -18,7 +18,7 @@ class CreatePlansTable extends Migration
             $table->string('name');
             $table->string('url');
             $table->string('description', 500)->nullable();
-            $table->integer('price');
+            $table->double('price', 10, 2);
             $table->timestamps();
         });
     }
