@@ -15,7 +15,7 @@ Route::prefix('admin')->group(function () {
     Route::resource('plans', PlanController::class);
 
 
-    // Route::any('profiles/search' . [ProfileController::class, 'search'])->name('profiles.search');
+    Route::any('profiles/search', [ProfileController::class, 'search'])->name('profiles.search');
     Route::resource('profiles', ProfileController::class);
 });
 

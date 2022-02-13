@@ -47,9 +47,9 @@
                                     <td>{{ $profile->description }}</td>
                                     <td>
                                         <div class="btn-group">
-                                            <a href="{{ route('profiles.edit', $profile->url) }}"
+                                            <a href="{{ route('profiles.edit', $profile->id) }}"
                                                 class="btn btn-warning">Editar</a>
-                                            <form action="{{ route('profiles.destroy', $profile->url) }}" method="POST">
+                                            <form action="{{ route('profiles.destroy', $profile->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger"><i

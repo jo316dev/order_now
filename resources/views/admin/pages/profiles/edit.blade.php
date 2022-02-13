@@ -13,7 +13,7 @@
 
         <div class="card-body">
 
-            <form action="{{ route('profiles.update', $profile->url) }}" method="POST">
+            <form action="{{ route('profiles.update', $profile->id) }}" method="POST">
                 @csrf
                 @method('PUT')
                 @include('admin.pages.profiles._partials.form')

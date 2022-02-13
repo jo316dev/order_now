@@ -232,6 +232,11 @@ return [
             'url'  => 'admin/plans',
             'icon' => 'fas fa-fw fa-lock',
         ],
+        [
+            'text' => 'Perfis',
+            'url'  => 'admin/profiles',
+            // 'icon' => 'fas fa-fw fa-lock',
+        ],
 
     ],
 

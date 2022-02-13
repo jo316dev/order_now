@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProfileRequest;
 use App\Models\Profile;
 use Illuminate\Http\Request;
 
@@ -48,14 +49,14 @@ class ProfileController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(profileRequest $request)
+    public function store(ProfileRequest $request)
     {
         if (!$this->repository->create($request->all())) {
 
-            return redirect()->back()->with('error', 'Houve um erro ao cadastrar o profileo');
+            return redirect()->back()->with('error', 'Houve um erro ao cadastrar o perfil');
         }
 
-        return redirect()->route('profiles.index')->with('success', 'profileo cadastrado com sucesso');
+        return redirect()->route('profiles.index')->with('success', 'perfil cadastrado com sucesso');
     }
 
     /**
@@ -72,14 +73,14 @@ class ProfileController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $url
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($url)
+    public function edit($id)
     {
-        if (!$profile = $this->repository->where('url', $url)->first()) {
+        if (!$profile = $this->repository->find($id)) {
 
-            return redirect()->back()->with('error', 'profileo não encontrado');
+            return redirect()->back()->with('error', 'Perfilnão encontrado');
         }
 
         return view(self::PROFILE . 'edit', compact('profile'));
@@ -89,14 +90,14 @@ class ProfileController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $url
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(profileRequest $request, $url)
+    public function update(profileRequest $request, $id)
     {
-        if (!$profile = $this->repository->where('url', $url)->first()) {
+        if (!$profile = $this->repository->find($id)) {
 
-            return redirect()->back()->with('error', 'profileo não encontrado');
+            return redirect()->back()->with('error', 'Perfilnão encontrado');
         }
 
         $profile->update($request->all());
@@ -107,26 +108,24 @@ class ProfileController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $url
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($url)
+    public function destroy($id)
     {
-        if (!$profile = $this->repository->where('url', $url)->first()) {
+        if (!$profile = $this->repository->find($id)) {
 
-            return redirect()->back()->with('error', 'profileo não encontrado');
+            return redirect()->back()->with('error', 'Perfilnão encontrado');
         }
 
         $profile->delete();
 
-        return redirect()->route('profiles.index')->with('success', 'profileo deletado com sucesso');
+        return redirect()->route('profiles.index')->with('success', 'Perfildeletado com sucesso');
     }
 
     public function search(Request $request)
     {
         $filters = $request->except('_token');
-
-
 
         $profiles = $this->repository->search($request->filter);
 
