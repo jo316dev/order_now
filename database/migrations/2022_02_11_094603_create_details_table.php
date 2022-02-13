@@ -14,8 +14,8 @@ class CreateDetailsTable extends Migration
     public function up()
     {
         Schema::create('details', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('plan_id')->constrained();
+            $table->uuid('id')->primary();
+            $table->uuid('plan_id')->nullable(false);
             $table->string('name');
             $table->timestamps();
         });

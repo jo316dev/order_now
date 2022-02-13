@@ -14,9 +14,9 @@ class CreatePlanProfileTable extends Migration
     public function up()
     {
         Schema::create('plan_profile', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('plan_id')->constrained('plans');
-            $table->foreignId('profile_id')->constrained('profiles');
+            $table->uuid('id')->primary();
+            $table->uuid('plan_id')->nullable(false);
+            $table->uuid('profile_id')->nullable(false);
             $table->timestamps();
         });
     }
