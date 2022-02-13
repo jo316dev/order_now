@@ -3,10 +3,23 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PermissionRequest;
+use App\Models\Permission;
 use Illuminate\Http\Request;
 
 class PermissionController extends Controller
 {
+    private $repository;
+    const PERMISSION = 'admin.pages.permissions.';
+
+
+
+    public function __construct(Permission $permission)
+    {
+        $this->repository = $permission;
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +27,9 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        //
+        $permissions = $this->repository->latest()->paginate();
+
+        return view(self::PERMISSION . 'index', compact('permissions'));
     }
 
     /**
@@ -24,7 +39,7 @@ class PermissionController extends Controller
      */
     public function create()
     {
-        //
+        return view(self::PERMISSION . 'create');
     }
 
     /**
@@ -33,9 +48,14 @@ class PermissionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PermissionRequest $request)
     {
-        //
+        if (!$this->repository->create($request->all())) {
+
+            return redirect()->back()->with('error', 'Houve um erro ao cadastrar o perfil');
+        }
+
+        return redirect()->route('permissions.index')->with('success', 'perfil cadastrado com sucesso');
     }
 
     /**
@@ -57,7 +77,12 @@ class PermissionController extends Controller
      */
     public function edit($id)
     {
-        //
+        if (!$permission = $this->repository->find($id)) {
+
+            return redirect()->back()->with('error', 'Perfil não encontrado');
+        }
+
+        return view(self::PERMISSION . 'edit', compact('permission'));
     }
 
     /**
@@ -67,9 +92,16 @@ class PermissionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PermissionRequest $request, $id)
     {
-        //
+        if (!$permission = $this->repository->find($id)) {
+
+            return redirect()->back()->with('error', 'Perfilnão encontrado');
+        }
+
+        $permission->update($request->all());
+
+        return redirect()->route('permissions.index');
     }
 
     /**
@@ -80,6 +112,22 @@ class PermissionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if (!$permission = $this->repository->find($id)) {
+
+            return redirect()->back()->with('error', 'Perfilnão encontrado');
+        }
+
+        $permission->delete();
+
+        return redirect()->route('permissions.index')->with('success', 'Perfildeletado com sucesso');
+    }
+
+    public function search(Request $request)
+    {
+        $filters = $request->except('_token');
+
+        $permissions = $this->repository->search($request->filter);
+
+        return view(self::PERMISSION . 'index', compact('permissions', 'filters'));
     }
 }

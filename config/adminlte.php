@@ -237,6 +237,11 @@ return [
             'url'  => 'admin/profiles',
             // 'icon' => 'fas fa-fw fa-lock',
         ],
+        [
+            'text' => 'Permissões',
+            'url'  => 'admin/permissions',
+            // 'icon' => 'fas fa-fw fa-lock',
+        ],
 
     ],
 
